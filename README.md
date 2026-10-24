@@ -46,6 +46,16 @@ Buyer deal-alert form: `BUYER_FORM_ID` / `BUYER_FORM_HEIGHT` in build.py (embedd
 
 `{{root}}` relative link to site root, `{{booking}}` booking calendar (falls back to the Contact page), `{{valuation_url}}`, `{{form}}` embedded HighLevel valuation form, `{{buyer_cta}}`, `{{email}}`, `{{phone}}`, `{{tel}}`.
 
+## IndexNow
+
+The key file `static/<key>.txt` (key also in `.indexnow-key`) lets you notify Bing and other IndexNow engines of new URLs:
+
+```
+curl -s -H "Content-Type: application/json" https://api.indexnow.org/indexnow -d '{"host":"mainstreetexits.net","key":"KEY","keyLocation":"https://mainstreetexits.net/KEY.txt","urlList":["https://mainstreetexits.net/blog/new-post/"]}'
+```
+
+Google no longer accepts sitemap pings. Submit the sitemap in Search Console instead.
+
 ## FAQ schema
 
 Any `<details class="faq"><summary>Question</summary><div>Answer</div></details>` block on a page is automatically added to FAQPage structured data.
