@@ -22,9 +22,9 @@ VALUATION_URL = "https://valuation.mainstreetexits.net/"
 VALUATION_FORM_ID = "oZxKhFmfiqPgMGftSxwq"         # HighLevel Form 12
 FORM_EMBED_HOST = "https://api.leadconnectorhq.com/widget/form/"
 FORM_EMBED_SCRIPT = "https://link.msgsndr.com/js/form_embed.js"
-# Exit Strategy Call calendar. Leave "" until the calendar URL is supplied;
-# every "Book a confidential call" button falls back to the Contact page.
-BOOKING_URL = ""
+# Exit Strategy Call calendar (HighLevel booking widget). Embedded on /book/;
+# every "Book a confidential call" button points to /book/.
+BOOKING_URL = "https://api.leadconnectorhq.com/widget/bookings/exit-strategy-call"
 # HighLevel buyer deal-alert form id. Leave "" until supplied; the Buyers page
 # falls back to an email link.
 BUYER_FORM_ID = ""
@@ -48,7 +48,20 @@ def read_doc(path):
 
 
 def booking_href(root):
-    return BOOKING_URL or root + "contact/#book"
+    return root + "book/" if BOOKING_URL else root + "contact/#book"
+
+
+def booking_embed(height=900):
+    """HighLevel calendar embed with LeadConnector form_embed.js (auto-resizes the iframe).
+    Container has a fixed minimum height so the page does not jump while it loads."""
+    if not BOOKING_URL:
+        return f'<p>Call <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a> or email <a href="mailto:{EMAIL}">{EMAIL}</a> to set a time.</p>'
+    return (f'<div class="formbox" style="min-height:{height}px"><iframe src="{BOOKING_URL}" '
+            f'style="width:100%;height:{height}px;border:none;overflow:hidden" scrolling="no" '
+            f'id="exit-strategy-call_booking" title="Book a confidential Exit Strategy Call"></iframe></div>'
+            f'<script src="{FORM_EMBED_SCRIPT}" defer></script>'
+            f'<p class="small">Trouble with the calendar? Call <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a> or email '
+            f'<a href="mailto:{EMAIL}">{EMAIL}</a>.</p>')
 
 
 def form_embed(height=1400):
@@ -112,7 +125,7 @@ def render(meta, body, url_path, depth, extra_schema=None):
     root = "../" * depth if depth else "./"
     body = (body.replace("{{root}}", root).replace("{{booking}}", booking_href(root))
                 .replace("{{valuation_url}}", VALUATION_URL).replace("{{form}}", form_embed())
-                .replace("{{buyer_cta}}", buyer_cta()).replace("{{email}}", EMAIL)
+                .replace("{{buyer_cta}}", buyer_cta()).replace("{{booking_embed}}", booking_embed()).replace("{{email}}", EMAIL)
                 .replace("{{phone}}", PHONE_DISPLAY).replace("{{tel}}", PHONE_TEL))
     canonical = SITE_URL + "/" + url_path
     schemas = [org_schema()]
