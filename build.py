@@ -13,6 +13,7 @@ import html, json, os, re, shutil, datetime
 # CONFIG: the only place you should need to edit settings
 # ---------------------------------------------------------------------------
 SITE_URL = "https://mainstreetexits.net"          # canonical domain (no trailing slash)
+CUSTOM_DOMAIN = "mainstreetexits.net"             # written to docs/CNAME on every build (GitHub Pages custom domain)
 BRAND = "Main Street Exits"
 BROKER_LINE = "Eric Camehl, Licensed Broker Associate, Infinity Business Brokers"
 EMAIL = "eric@mainstreetexits.net"
@@ -179,6 +180,8 @@ def main():
         if f != "site.css":
             shutil.copy(os.path.join(ROOT, "static", f), OUT)
     open(os.path.join(OUT, ".nojekyll"), "w").close()
+    if CUSTOM_DOMAIN:
+        open(os.path.join(OUT, "CNAME"), "w").write(CUSTOM_DOMAIN + "\n")
     urls = []
 
     # Blog posts

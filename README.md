@@ -50,7 +50,7 @@ Any `<details class="faq"><summary>Question</summary><div>Answer</div></details>
 
 ## Going live on mainstreetexits.net
 
-1. Repo Settings > Pages > Custom domain: `mainstreetexits.net` (this creates the CNAME). Enforce HTTPS once the certificate is issued.
+1. Custom domain is set (`CUSTOM_DOMAIN` in build.py writes `docs/CNAME` on every build, so rebuilds never drop it). HTTPS is enforced in Settings > Pages.
 2. DNS for the apex: A records to 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153 (optional AAAA: 2606:50c0:8000::153, 2606:50c0:8001::153, 2606:50c0:8002::153, 2606:50c0:8003::153).
 3. DNS for www: CNAME `www` -> `growthorgrowth-cyber.github.io`.
 4. Leave `valuation.mainstreetexits.net` pointed at HighLevel.
