@@ -28,7 +28,8 @@ FORM_EMBED_SCRIPT = "https://link.msgsndr.com/js/form_embed.js"
 BOOKING_URL = "https://api.leadconnectorhq.com/widget/bookings/exit-strategy-call"
 # HighLevel buyer deal-alert form id. Leave "" until supplied; the Buyers page
 # falls back to an email link.
-BUYER_FORM_ID = ""
+BUYER_FORM_ID = "rJQzQTYBqOylScYpOLng"   # MSE Buyer Deal Alerts
+BUYER_FORM_HEIGHT = 1600
 # ---------------------------------------------------------------------------
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -65,32 +66,35 @@ def booking_embed(height=900):
             f'<a href="mailto:{EMAIL}">{EMAIL}</a>.</p>')
 
 
-def form_embed(height=1400):
-    """HighLevel Form 12 embed. The iframe is injected when the visitor scrolls near it
-    (keeps third-party cookies/JS off the initial page load); fixed height = no layout shift."""
-    fid = VALUATION_FORM_ID
+def lazy_form(fid, title, height, box_id, anchor):
+    """HighLevel form embed (api.leadconnectorhq.com). The iframe is injected when the visitor
+    scrolls near it, keeping third-party cookies/JS off the initial load; the box has a fixed
+    height so the page never shifts."""
     src = FORM_EMBED_HOST + fid
-    iframe = (f'<iframe src="{src}" id="inline-{fid}" title="Free confidential business valuation form" '
-              f'style="width:100%;height:{height}px;border:none;border-radius:6px" data-form-name="Form 12" '
+    iframe = (f'<iframe src="{src}" id="inline-{fid}" title="{title}" '
+              f'style="width:100%;height:{height}px;border:none;border-radius:6px" '
               f'data-height="{height}" data-layout-iframe-id="inline-{fid}" data-form-id="{fid}"></iframe>')
-    js = ("<script>(function(){var b=document.getElementById('vform');function go(){if(b.dataset.on)return;"
+    js = ("<script>(function(){var b=document.getElementById('" + box_id + "');function go(){if(b.dataset.on)return;"
           "b.dataset.on=1;b.innerHTML=b.dataset.html;}"
           "if('IntersectionObserver'in window){new IntersectionObserver(function(e,o){if(e[0].isIntersecting){go();o.disconnect();}},"
           "{rootMargin:'300px'}).observe(b);}else{go();}"
-          "document.querySelectorAll('a[href=\"#valuation-form\"]').forEach(function(a){a.addEventListener('click',go);});})();</script>")
-    return (f'<div class="formbox" id="vform" style="height:{height + 14}px" data-html="{html.escape(iframe)}">'
-            f'<noscript>{iframe}</noscript><p class="small" style="padding:12px">Loading the secure valuation form. '
-            f'If it does not appear, <a href="{VALUATION_URL}">open it here</a>.</p></div>{js}'
-            f'<p class="small">Prefer not to use the form? Email <a href="mailto:{EMAIL}">{EMAIL}</a> or call '
+          "document.querySelectorAll('a[href=\"#" + anchor + "\"]').forEach(function(a){a.addEventListener('click',go);});})();</script>")
+    return (f'<div class="formbox" id="{box_id}" style="height:{height + 14}px" data-html="{html.escape(iframe)}">'
+            f'<noscript>{iframe}</noscript><p class="small" style="padding:12px">Loading the secure form. '
+            f'If it does not appear, <a href="{src}">open it here</a>.</p></div>{js}')
+
+
+def form_embed(height=1400):
+    return (lazy_form(VALUATION_FORM_ID, "Free confidential business valuation form", height, "vform", "valuation-form")
+            + f'<p class="small">Prefer not to use the form? Email <a href="mailto:{EMAIL}">{EMAIL}</a> or call '
             f'<a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>.</p>')
 
 
-def buyer_cta():
+def buyer_cta(height=BUYER_FORM_HEIGHT):
     if BUYER_FORM_ID:
-        fid = BUYER_FORM_ID
-        return (f'<div class="formbox" style="min-height:900px"><iframe src="{FORM_EMBED_HOST}{fid}" id="inline-{fid}" '
-                f'title="Buyer deal alerts signup" loading="lazy" style="width:100%;height:900px;border:none" '
-                f'data-form-id="{fid}" data-layout-iframe-id="inline-{fid}"></iframe></div>')
+        return (lazy_form(BUYER_FORM_ID, "Buyer deal alerts signup", height, "bform", "deal-alerts")
+                + f'<p class="small">Questions first? Email <a href="mailto:{EMAIL}">{EMAIL}</a> or call '
+                f'<a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>.</p>')
     subj = "Buyer%20deal%20alerts"
     body = ("Name%3A%0APhone%3A%0AIndustries%20I%20want%3A%0AStates%20or%20regions%3A%0A"
             "Price%20range%3A%0ACash%20available%20to%20invest%3A%0AUsing%20SBA%20financing%3F%3A")

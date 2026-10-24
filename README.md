@@ -42,6 +42,8 @@ Writing rules: plain language, no em dashes, no invented stats, testimonials or 
 
 ## Placeholders available in content
 
+Buyer deal-alert form: `BUYER_FORM_ID` / `BUYER_FORM_HEIGHT` in build.py (embedded on /buyers/).
+
 `{{root}}` relative link to site root, `{{booking}}` booking calendar (falls back to the Contact page), `{{valuation_url}}`, `{{form}}` embedded HighLevel valuation form, `{{buyer_cta}}`, `{{email}}`, `{{phone}}`, `{{tel}}`.
 
 ## FAQ schema
