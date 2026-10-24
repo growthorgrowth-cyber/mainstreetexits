@@ -151,7 +151,8 @@ def render(meta, body, url_path, depth, extra_schema=None):
 <link rel="canonical" href="{canonical}">
 <meta property="og:type" content="{meta.get('ogtype','website')}"><meta property="og:site_name" content="{BRAND}">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}">
-<meta property="og:url" content="{canonical}"><meta property="og:image" content="{SITE_URL}/og.png">
+<meta property="og:url" content="{canonical}"><meta property="og:image" content="{SITE_URL}/{meta.get('image','og.png')}">
+<meta property="og:image:alt" content="{html.escape(meta.get('image_alt','Main Street Exits: value it, prepare it, sell it, confidentially'))}">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{root}favicon.svg" type="image/svg+xml"><link rel="icon" href="{root}favicon.ico" sizes="32x32">
@@ -181,8 +182,11 @@ def main():
         shutil.rmtree(OUT)
     os.makedirs(OUT)
     for f in os.listdir(os.path.join(ROOT, "static")):
-        if f != "site.css":
-            shutil.copy(os.path.join(ROOT, "static", f), OUT)
+        src = os.path.join(ROOT, "static", f)
+        if os.path.isdir(src):
+            shutil.copytree(src, os.path.join(OUT, f))
+        elif f != "site.css":
+            shutil.copy(src, OUT)
     open(os.path.join(OUT, ".nojekyll"), "w").close()
     if CUSTOM_DOMAIN:
         open(os.path.join(OUT, "CNAME"), "w").write(CUSTOM_DOMAIN + "\n")
@@ -197,6 +201,7 @@ def main():
         meta, body = read_doc(os.path.join(bdir, f))
         slug = meta.get("slug") or re.sub(r"^\d{4}-\d{2}-\d{2}-", "", f[:-5])
         meta["slug"] = slug
+        meta["words"] = str(len(re.sub(r"<[^>]+>", " ", body).split()))
         posts.append((meta, body))
     posts.sort(key=lambda p: (p[0]["date"], p[0]["title"]), reverse=True)
     for meta, body in posts:
@@ -213,7 +218,13 @@ def main():
                   "dateModified": meta.get("updated", meta["date"]),
                   "author": {"@type": "Person", "name": "Eric Camehl"},
                   "publisher": {"@type": "Organization", "name": BRAND},
-                  "mainEntityOfPage": SITE_URL + "/" + url, "image": SITE_URL + "/og.png"}
+                  "mainEntityOfPage": SITE_URL + "/" + url, "image": SITE_URL + "/" + meta.get("image", "og.png"),
+                  "url": SITE_URL + "/" + url}
+        schema["author"]["url"] = SITE_URL + "/about/"
+        if meta.get("keywords"):
+            schema["keywords"] = meta["keywords"]
+        if meta.get("words"):
+            schema["wordCount"] = int(meta["words"])
         meta["ogtype"] = "article"
         write(url, render(meta, art, url, 2, schema))
         urls.append((url, meta.get("updated", meta["date"])))
