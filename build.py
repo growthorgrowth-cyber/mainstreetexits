@@ -30,6 +30,11 @@ BOOKING_URL = "https://api.leadconnectorhq.com/widget/bookings/exit-strategy-cal
 # falls back to an email link.
 BUYER_FORM_ID = "rJQzQTYBqOylScYpOLng"   # MSE Buyer Deal Alerts
 BUYER_FORM_HEIGHT = 1600
+# HighLevel chat widget. Injected after first interaction or ~4s idle so it does
+# not affect load speed or layout. Set CHAT_WIDGET_ID = "" to remove it.
+CHAT_WIDGET_ID = "6adce84e912bacec15741935"
+CHAT_LOADER = "https://widgets.leadconnectorhq.com/loader.js"
+CHAT_RESOURCES = "https://widgets.leadconnectorhq.com/chat-widget/loader.js"
 # ---------------------------------------------------------------------------
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -126,6 +131,19 @@ def org_schema():
                          "worksFor": {"@type": "Organization", "name": "Infinity Business Brokers"}}}
 
 
+def chat_snippet():
+    if not CHAT_WIDGET_ID:
+        return ""
+    return ("<script>(function(){var done=false,ev=['scroll','pointerdown','keydown','touchstart','mousemove'];"
+            "function load(){if(done)return;done=true;ev.forEach(function(e){removeEventListener(e,load,{passive:true});});"
+            "var s=document.createElement('script');s.src='" + CHAT_LOADER + "';"
+            "s.setAttribute('data-resources-url','" + CHAT_RESOURCES + "');"
+            "s.setAttribute('data-widget-id','" + CHAT_WIDGET_ID + "');s.async=true;document.body.appendChild(s);}"
+            "ev.forEach(function(e){addEventListener(e,load,{passive:true,once:true});});"
+            "function idle(){setTimeout(load,4000);}"
+            "if(document.readyState==='complete'){idle();}else{addEventListener('load',idle);}})();</script>")
+
+
 def render(meta, body, url_path, depth, extra_schema=None):
     root = "../" * depth if depth else "./"
     body = (body.replace("{{root}}", root).replace("{{booking}}", booking_href(root))
@@ -168,7 +186,7 @@ def render(meta, body, url_path, depth, extra_schema=None):
 <a href="mailto:{EMAIL}">{EMAIL}</a> | <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a><br>Serving business owners and buyers in all 50 states.</p>
 <p class="links"><a href="{root}faq/">FAQ</a> <a href="{root}blog/">Blog</a> <a href="{root}privacy-policy/">Privacy Policy</a> <a href="{root}terms/">Terms of Use</a> <a href="{VALUATION_URL}">Free Valuation</a></p>
 <p class="small">Results not guaranteed. Valuations are estimates based on current market data and do not guarantee a sale price or timeline. Submitting a form or contacting us does not establish a brokerage relationship. Main Street Exits operates as a licensed broker associate affiliated with Infinity Business Brokers. &copy; {datetime.date.today().year} Main Street Exits | Infinity Business Brokers.</p>
-</div></footer></body></html>"""
+</div></footer>{chat_snippet()}</body></html>"""
 
 
 def write(url_path, page):

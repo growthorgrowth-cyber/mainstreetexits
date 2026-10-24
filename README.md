@@ -56,6 +56,10 @@ curl -s -H "Content-Type: application/json" https://api.indexnow.org/indexnow -d
 
 Google no longer accepts sitemap pings. Submit the sitemap in Search Console instead.
 
+## Chat widget
+
+The HighLevel chat widget (`CHAT_WIDGET_ID` in build.py) is added to every page. It loads after the first scroll, tap, key press or mouse move, or about 4 seconds after page load, so it does not slow the page or shift layout.
+
 ## FAQ schema
 
 Any `<details class="faq"><summary>Question</summary><div>Answer</div></details>` block on a page is automatically added to FAQPage structured data.
