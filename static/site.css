@@ -34,3 +34,10 @@ table{border-collapse:collapse;width:100%;margin:12px 0;font-size:16px}th,td{bor
 .foot{background:#0d2236;color:#c9d6e2;padding:26px 0;margin-top:40px;font-size:15px}.foot a{color:#fff}.foot .links a{margin-right:14px}.foot .small{color:#9fb2c4}
 @media(max-width:640px){h1{font-size:28px}h2{font-size:22px}.hero{padding:30px 0}.nav{font-size:14px;gap:2px 14px}}
 .cta .btn.alt{background:#fff;color:#14324f}.cta .btn.alt:hover{background:#e6eef6;color:#14324f}
+.brand{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;text-decoration:none;color:#fff;padding:8px 0}
+.brand .logo,.brand .bkr{font-weight:800;font-size:21px;letter-spacing:.2px;color:#fff}
+.brand .sep{color:#8fa6bd;font-size:21px}.bkr-pre{font-weight:600;color:#d8e4f0}
+.tel-wrap{display:flex;flex-direction:column;align-items:flex-end;line-height:1.25}.tel-bk{font-size:12px;color:#d8e4f0}
+.brk{margin-top:2px}.cta .brk,.cta .consent{color:#d8e4f0}
+.disclosure{font-size:15px;color:#e3ebf3;border-top:1px solid #2a4563;padding-top:12px}
+@media(max-width:640px){.brand .logo,.brand .bkr,.brand .sep{font-size:18px}.bar{gap:8px}}
