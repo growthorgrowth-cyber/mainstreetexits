@@ -44,7 +44,7 @@ FORM_EMBED_HOST = "https://api.leadconnectorhq.com/widget/form/"
 FORM_EMBED_SCRIPT = "https://link.msgsndr.com/js/form_embed.js"
 # Exit Strategy Call calendar (HighLevel booking widget). Embedded on /book/;
 # every "Book a confidential call" button points to /book/.
-BOOKING_URL = "https://api.leadconnectorhq.com/widget/bookings/exit-strategy-call"
+BOOKING_URL = "https://calendar.app.google/Arm6A7EAJrHDvhWCA"
 # HighLevel buyer deal-alert form id. Leave "" until supplied; the Buyers page
 # falls back to an email link.
 BUYER_FORM_ID = "rJQzQTYBqOylScYpOLng"   # MSE Buyer Deal Alerts
@@ -74,7 +74,7 @@ def read_doc(path):
 
 
 def booking_href(root):
-    return root + "book/" if BOOKING_URL else root + "contact/#book"
+    return BOOKING_URL if BOOKING_URL else root + "contact/#book"
 
 
 def booking_embed(height=900):
@@ -82,10 +82,9 @@ def booking_embed(height=900):
     Container has a fixed minimum height so the page does not jump while it loads."""
     if not BOOKING_URL:
         return f'<p>Call {TEAM_LINE}, at <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a> or email <a href="mailto:{EMAIL}">{EMAIL}</a> to set a time.</p>'
-    return (f'<div class="formbox" style="min-height:{height}px"><iframe src="{BOOKING_URL}" '
-            f'style="width:100%;height:{height}px;border:none;overflow:hidden" scrolling="no" '
-            f'id="exit-strategy-call_booking" title="Book a confidential Exit Strategy Call"></iframe></div>'
-            f'<script src="{FORM_EMBED_SCRIPT}" defer></script>'
+    return (f'<div class="formbox" style="text-align:center;padding:40px 20px">'
+            f'<p>Pick a time that works for you on our secure scheduling calendar (opens in a new tab).</p>'
+            f'<p><a class="btn" style="font-size:1.2em;padding:16px 32px" href="{BOOKING_URL}" target="_blank" rel="noopener">Book a confidential Exit Strategy Call</a></p></div>'
             f'{consent_html()}'
             f'<p class="small">Trouble with the calendar? Call {TEAM_LINE}, at <a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a> or email '
             f'<a href="mailto:{EMAIL}">{EMAIL}</a>.</p>')
