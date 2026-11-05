@@ -35,7 +35,7 @@ CONSENT_NOTE = (f"By submitting, you agree that {BRAND} at {BROKERAGE} may conta
                 "consent box, and marketing texts only if you check the marketing box. Calls and texts may be sent "
                 "using automated technology. Consent is not a condition of any purchase or service. Message frequency "
                 "varies. Message and data rates may apply. Reply STOP to opt out at any time, or HELP for help.")
-EMAIL = "eric@mainstreetexits.net"
+EMAIL = "eric@infinitybusinessbrokers.com"
 PHONE_DISPLAY = "(877) 450-8756"
 PHONE_TEL = "+18774508756"
 VALUATION_URL = "https://valuation.mainstreetexits.net/"

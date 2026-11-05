@@ -2,13 +2,13 @@
 
 Free options only. Nothing in this plan needs a paid membership, dues, a listing fee or a paid upgrade. Free tiers that have limits are flagged. If any site asks for payment at signup, skip it.
 
-Rules: no paid links, no link farms or PBNs, no comment or forum spam, no reciprocal-link schemes. Every link comes from a real profile, a real relationship, or content an editor chose to publish. Point links at https://mainstreetexits.net, or the specific page noted, and keep the name, phone (877-450-8756) and email (eric@mainstreetexits.net) identical everywhere.
+Rules: no paid links, no link farms or PBNs, no comment or forum spam, no reciprocal-link schemes. Every link comes from a real profile, a real relationship, or content an editor chose to publish. Point links at https://mainstreetexits.net, or the specific page noted, and keep the name, phone (877-450-8756) and email (eric@infinitybusinessbrokers.com) identical everywhere.
 
 **Florida compliance for every listing (FAC 61J2-10.025 and 61J2-10.026).** Main Street Exits is a team, not a brokerage. Every profile, directory listing, post and image must show the brokerage name with it, in equal or larger type, and must never call Main Street Exits a brokerage, firm, company or agency. Get Mike Monnot's (Infinity's qualifying broker) OK before creating any business listing under the team name.
 
 - Name, where a separate name field exists: `Main Street Exits | Infinity Business Brokers` (or just `Infinity Business Brokers` if the platform rejects team names; Google Business Profile does not allow extra words in the name, so ask Mike whether to list it under the brokerage).
 - First line of every description: `Main Street Exits is a team of IBB Business Brokers LLC d/b/a Infinity Business Brokers, a licensed Florida real estate brokerage (License CQ1045706). Eric Camehl, Licensed Real Estate Broker Associate (BK3294556). All brokerage services are provided through Infinity Business Brokers.`
-- Phone 877-450-8756, email eric@mainstreetexits.net, website https://mainstreetexits.net. No home address. Use service-area settings.
+- Phone 877-450-8756, email eric@infinitybusinessbrokers.com, website https://mainstreetexits.net. No home address. Use service-area settings.
 - Category: Business broker. Never pick "Real estate agency" or anything that implies a separate firm.
 
 Priority: 1 = do this week, 2 = this month, 3 = ongoing.
